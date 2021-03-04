@@ -61,4 +61,10 @@ export class AppComponent implements OnInit {
         this.filesUploaded = [];
         this.generated = false;
     }
+
+    public calc() {
+        // const val = this.filesUploaded.length / 4;
+        // return 'width:18%; height: 20%'
+        return `width: calc(calc(100% / ${this.filesUploaded.length }) - 1rem); height: 20%`;
+    }
 }

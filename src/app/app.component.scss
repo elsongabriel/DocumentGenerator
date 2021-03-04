@@ -46,7 +46,7 @@
     //flex-direction: column;
     //}
 
-    .area-print {
+    .area-buttons {
       position: absolute;
       top: 3rem;
       right: 3rem;
@@ -60,8 +60,9 @@
 
     .container-tag-a4 {
       img {
-        width: 50%;
+        width: 30%;
         height: 50%;
+        margin: .7rem;
       }
     }
   }
@@ -82,14 +83,18 @@
   @media print {
     .banner-page,
     .main-content,
-    .area-print {
+    .area-buttons {
       display: none;
     }
 
-    .container-tag-a4 {
+    .print {
       width: 210mm;
       height: 297mm;
       overflow: hidden;
     }
+
+    //.print {
+    //  overflow: hidden;
+    //}
   }
 }
