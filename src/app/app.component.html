@@ -1,0 +1,47 @@
+<div class="admin-layout">
+    <div class="banner-page">
+        <div class="banner">
+            Gerador de Documentos
+        </div>
+    </div>
+
+    <div class="main-content" *ngIf="!generated" [@showdown]>
+        <div class="generate">
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <ngx-dropzone class="custom-dropzone" (change)="onFilesAdded($event)" [accept]="'image/*'">
+                        <ngx-dropzone-label>Arraste os arquivos ou clique aqui</ngx-dropzone-label>
+                        <ngx-dropzone-image-preview *ngFor="let f of files" [removable]="true"
+                                                    (removed)="removeImg(f)" [file]="f">
+                        </ngx-dropzone-image-preview>
+                    </ngx-dropzone>
+                    <button mat-flat-button class="rounded" color="primary" (click)="generate()"
+                            [disabled]="files.length==0">Gerar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="print" *ngIf="generated">
+        <div class="area-print flex justify-content-between">
+            <button mat-flat-button class="mr-1" (click)="back()">
+                <mat-icon>arrow_back</mat-icon>
+                Voltar
+            </button>
+            <button mat-flat-button (click)="print()">
+                <mat-icon>print</mat-icon>
+                Imprimir
+            </button>
+        </div>
+
+        <div class="container-tag-a4" *ngIf="filesUploaded.length>0">
+            <!--        <div class="row flex justify-content-between">-->
+            <!--            <div class="col-6" *ngFor="let file of filesUploaded">-->
+            <img alt="" [src]="file" *ngFor="let file of filesUploaded">
+            <!--            </div>-->
+            <!--        </div>-->
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>
