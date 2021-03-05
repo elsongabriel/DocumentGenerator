@@ -2,6 +2,20 @@
     <div class="banner-page">
         <div class="banner">
             Gerador de Documentos
+            <div class="area-buttons flex justify-content-between" *ngIf="generated">
+                <button mat-flat-button class="mr-1" (click)="back()">
+                    <mat-icon>arrow_back</mat-icon>
+                    Voltar
+                </button>
+                <button mat-flat-button class="mr-1" (click)="print()">
+                    <mat-icon>print</mat-icon>
+                    Imprimir
+                </button>
+                <button mat-flat-button color="warn" (click)="clear()">
+                    <mat-icon>delete</mat-icon>
+                    Limpar
+                </button>
+            </div>
         </div>
     </div>
 
@@ -12,7 +26,7 @@
                     <ngx-dropzone class="custom-dropzone" (change)="onFilesAdded($event)" [accept]="'image/*'">
                         <ngx-dropzone-label>Arraste os arquivos ou clique aqui</ngx-dropzone-label>
                         <ngx-dropzone-image-preview *ngFor="let f of files" [removable]="true"
-                                                    (removed)="removeImg(f)" [file]="f">
+                                                    (removed)="removeImg(f)" [file]="f" #asdas>
                         </ngx-dropzone-image-preview>
                     </ngx-dropzone>
                     <button mat-flat-button class="rounded" color="primary" (click)="generate()"
@@ -24,23 +38,12 @@
     </div>
 
     <div class="print" *ngIf="generated">
-        <div class="area-buttons flex justify-content-between">
-            <button mat-flat-button class="mr-1" (click)="back()">
-                <mat-icon>arrow_back</mat-icon>
-                Voltar
-            </button>
-            <button mat-flat-button (click)="print()">
-                <mat-icon>print</mat-icon>
-                Imprimir
-            </button>
-        </div>
-
         <div class="container-tag-a4 flex justify-content-center text-center" *ngIf="filesUploaded.length>0">
-            <!--        <div class="row flex justify-content-between">-->
-            <!--            <div class="col-6" *ngFor="let file of filesUploaded">-->
-            <img alt="" [src]="file" *ngFor="let file of filesUploaded" style="{{calc()}}">
-            <!--            </div>-->
-            <!--        </div>-->
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-3 align-items-center" *ngFor="let file of filesUploaded">
+                    <img class="img" [alt]="file.name" [src]="file.image">
+                </div>
+            </div>
         </div>
     </div>
 </div>

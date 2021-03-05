@@ -22,6 +22,19 @@ export class AppComponent implements OnInit {
         window.addEventListener('afterprint', function(event) {
             // window.close();
         });
+
+        this.filesUploaded = this.storage.getLocalStorage('filesUploaded');
+        for (const fileUp of this.filesUploaded) {
+            this.files.push(this.dataURLtoFile(fileUp));
+        }
+    }
+
+    private dataURLtoFile(file: any) {
+        var arr = file.image.split(','), mime = arr[0].match(/:(.*?);/)[1], bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], file.name, {type: mime});
     }
 
     public onFilesAdded(event) {
@@ -32,7 +45,7 @@ export class AppComponent implements OnInit {
                 let content = (e.target as FileReader).result;
                 content = `${content}`;
                 // this.filesUploaded.push(content.split(',')[1]);
-                this.filesUploaded.push(content);
+                this.filesUploaded.push({image: content, name: file.name});
             };
             reader.readAsDataURL(file);
         });
@@ -44,6 +57,8 @@ export class AppComponent implements OnInit {
             return;
         }
         this.generated = true;
+        this.storage.setFiles('files', this.files);
+        this.storage.setFiles('filesUploaded', this.filesUploaded);
     }
 
     public removeImg(event) {
@@ -54,17 +69,27 @@ export class AppComponent implements OnInit {
 
     public print() {
         setTimeout(() => window.print(), 1000);
+        this.storage.setLocalStorage('filesUploaded', this.filesUploaded);
     }
 
-    public back() {
+    public back(clear: boolean = false) {
+        this.generated = false;
+        if (!clear) {
+            this.files = this.storage.getFiles('files');
+            this.filesUploaded = this.storage.getFiles('filesUploaded');
+        }
+    }
+
+    public clear() {
         this.files = [];
         this.filesUploaded = [];
-        this.generated = false;
+        window.localStorage.clear();
+        this.back(true);
     }
 
     public calc() {
         // const val = this.filesUploaded.length / 4;
         // return 'width:18%; height: 20%'
-        return `width: calc(calc(100% / ${this.filesUploaded.length }) - 1rem); height: 20%`;
+        return `width: calc(calc(100% / ${this.filesUploaded.length}) - 1rem); height: 20%`;
     }
 }

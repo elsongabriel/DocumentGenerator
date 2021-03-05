@@ -5,16 +5,25 @@ import {Injectable} from '@angular/core';
 })
 export class StorageService {
 
-    public files: any[] = [];
+    public storage: any = {};
 
     constructor() {
     }
 
-    public getFiles(): any[] {
-        return this.files;
+    public getFiles(field: string): any {
+        return this.storage[field];
     }
 
-    public setFiles(files: any[]) {
-        this.files = files;
+    public setFiles(field: string, values: any) {
+        this.storage[field] = values;
+    }
+
+    public getLocalStorage(field: string) {
+        const storage = window.localStorage.getItem(field);
+        return storage ? JSON.parse(storage) : [];
+    }
+
+    public setLocalStorage(field: string, values: any) {
+        window.localStorage.setItem(field, JSON.stringify(values));
     }
 }
