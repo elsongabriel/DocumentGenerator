@@ -8,11 +8,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NotifierModule} from 'angular-notifier';
 import {notifierOptions} from './consts';
 //External
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MaterialModule} from './mat.module';
 import {LOCALE_ID, NgModule} from '@angular/core';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
-import {NgxUploaderModule} from 'ngx-uploader';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import {SnackBarComponent} from './utils/notify.service';
 //Routing & Layout
@@ -34,10 +32,7 @@ registerLocaleData(locale);
         BrowserAnimationsModule,
         BrowserModule,
         FormsModule,
-        ReactiveFormsModule,
-        NgbModule,
         MaterialModule,
-        NgxUploaderModule,
         NgxDropzoneModule,
         NotifierModule.withConfig(notifierOptions)
     ],
